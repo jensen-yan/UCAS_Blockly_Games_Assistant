@@ -284,7 +284,7 @@ webSocketServer.on('connection', function connection(ws) {
                     let game_data = data.games
 
                     // 判断 data.games 字段的长度，防止有人乱发东西，必要的时候加 SQL 注入防护
-                    if (game_data.length == 0 || Object.keys(game_data[0]).length != 2) {
+                    if (game_data === undefined || game_data.length == 0 || Object.keys(game_data[0]).length != 2) {
                         console.log('SERVER: 游戏存档非法，已拒绝')
                         let data_respond = {'funcCode': '0'}
                         ws.send(JSON.stringify(data_respond))
@@ -338,20 +338,3 @@ webSocketServer.on('connection', function connection(ws) {
         }
     })
 })
-
-
-
-// 防止数据丢失 [笑哭] 先写在这里
-const games = [
-    {'gameName':'maze1', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_moveForward"></block></statement></block></xml>'},
-    {'gameName':'maze2', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_moveForward"><next><block type="maze_turn"><field name="DIR">turnLeft</field><next><block type="maze_moveForward"><next><block type="maze_turn"><field name="DIR">turnRight</field><next><block type="maze_moveForward"></block></next></block></next></block></next></block></next></block></xml>'},
-    {'gameName':'maze3', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_moveForward"></block></statement></block></xml>'},
-    {'gameName':'maze4', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_moveForward"><next><block type="maze_turn"><field name="DIR">turnLeft</field><next><block type="maze_moveForward"><next><block type="maze_turn"><field name="DIR">turnRight</field></block></next></block></next></block></next></block></statement></block></xml>'},
-    {'gameName':'maze5', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_moveForward"><next><block type="maze_moveForward"><next><block type="maze_turn"><field name="DIR">turnLeft</field><next><block type="maze_forever"><statement name="DO"><block type="maze_moveForward"></block></statement></block></next></block></next></block></next></block></xml>'},
-    {'gameName':'maze6', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_moveForward"><next><block type="maze_if"><field name="DIR">isPathLeft</field><statement name="DO"><block type="maze_turn"><field name="DIR">turnLeft</field></block></statement></block></next></block></statement></block></xml>'},
-    {'gameName':'maze7', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_moveForward"><next><block type="maze_if"><field name="DIR">isPathRight</field><statement name="DO"><block type="maze_turn"><field name="DIR">turnRight</field></block></statement></block></next></block></statement></block></xml>'},
-    {'gameName':'maze8', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_if"><field name="DIR">isPathForward</field><statement name="DO"><block type="maze_moveForward"></block></statement><next><block type="maze_if"><field name="DIR">isPathLeft</field><statement name="DO"><block type="maze_turn"><field name="DIR">turnLeft</field></block></statement><next><block type="maze_if"><field name="DIR">isPathRight</field><statement name="DO"><block type="maze_turn"><field name="DIR">turnRight</field></block></statement></block></next></block></next></block></statement></block></xml>'},
-    {'gameName':'maze9', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_ifElse"><field name="DIR">isPathForward</field><statement name="DO"><block type="maze_moveForward"></block></statement><statement name="ELSE"><block type="maze_if"><field name="DIR">isPathLeft</field><statement name="DO"><block type="maze_turn"><field name="DIR">turnLeft</field></block></statement></block></statement></block></statement></block></xml>'},
-    {'gameName':'maze10', 'xml':'<xml xmlns="https://developers.google.com/blockly/xml"><block type="maze_forever"><statement name="DO"><block type="maze_ifElse"><field name="DIR">isPathLeft</field><statement name="DO"><block type="maze_turn"><field name="DIR">turnLeft</field><next><block type="maze_moveForward"></block></next></block></statement><statement name="ELSE"><block type="maze_ifElse"><field name="DIR">isPathForward</field><statement name="DO"><block type="maze_moveForward"></block></statement><statement name="ELSE"><block type="maze_turn"><field name="DIR">turnRight</field></block></statement></block></statement></block></statement></block></xml>'},
-]
-const game_data = {games}
