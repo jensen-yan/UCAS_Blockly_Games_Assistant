@@ -9,3 +9,5 @@ package-lock.json
 tmp
 
 blockly_gamers.db
+/server/coverage/
+/server/test.db

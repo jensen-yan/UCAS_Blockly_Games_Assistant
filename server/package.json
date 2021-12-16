@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "istanbul": "^0.4.5",
     "progress": "^2.0.3",
     "sqlite3": "^5.0.2",
     "ws": "^8.3.0"
@@ -16,7 +17,8 @@
   },
   "scripts": {
     "test": "mocha --exit",
-    "start": "node websocket.js"
+    "start": "node websocket.js",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha -- --exit"
   },
   "author": "liu peng, yan yue",
   "license": "ISC"
